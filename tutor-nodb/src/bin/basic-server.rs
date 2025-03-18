@@ -14,7 +14,7 @@ pub async fn health_check_handler() -> impl Responder {
 }
 
 pub async fn bubi_handler() -> impl Responder {
-   HttpResponse::Ok().json("Hello this is Bubi Info page")
+    HttpResponse::Ok().json("Hello this is Bubi Info page")
 }
 //instantiate and run the HTTP server
 #[actix_rt::main]

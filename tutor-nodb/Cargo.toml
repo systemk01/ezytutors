@@ -9,6 +9,10 @@ default-run = "tutor-service"
 #Actix web framework and run-time
 actix-web = "4.2.1"
 actix-rt = "2.7.0"
+# Data serialization library
+serde = {version = "1.0.117", features = ["derive"]}
+# other utilities
+chrono = {version = "0.4.40", features = ["serde"]}
 
 [[bin]]
 name = "basic-server"
