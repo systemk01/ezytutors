@@ -7,4 +7,6 @@ edition = "2021"
 
 
 [workspace]
-members = ["tutor-nodb"]
+members = ["tutor-nodb", "tutor-db"]
+#to set the tutor-db as the project root
+#you have to type export PROJECT_ROOT=. in the terminal in tutor-db folder
