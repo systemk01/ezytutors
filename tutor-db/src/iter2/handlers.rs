@@ -35,7 +35,7 @@ pub async fn post_new_course(
 mod tests {
     use super::*;
     use actix_web::http::StatusCode;
-    use chrono::NaiveDate;
+    use chrono::NaiveDateTime;
     use dotenv::dotenv;
     use sqlx::postgres::PgPool;
     use std::env;
@@ -49,7 +49,7 @@ mod tests {
         let app_state = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
-            db: db_pool,
+            _db: db_pool,
         });
         let tutor_id = web::Path::from(1);
         let resp = get_courses_for_tutor(app_state, tutor_id).await;
@@ -64,7 +64,7 @@ mod tests {
         let app_state = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
-            db: db_pool,
+            _db: db_pool,
         });
         let params = web::Path::from((1, 2));
         let resp = get_course_details(app_state, params).await;
@@ -79,13 +79,13 @@ mod tests {
         let app_state = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
-            db: db_pool,
+            _db: db_pool,
         });
         let new_course = Course {
             tutor_id: 1,
             course_id: 2,
             course_name: "this is the next course".into(),
-            posted_time: Some(NaiveDate::from_ymd(2025, 3, 25).and_hms(16, 14, 15)),
+            posted_time: Some(NaiveDateTime::parse_from_str("2015-09-05 23:56:04", "%Y-%m-%d %H:%M:%S").unwrap()),
         };
         let course_param = web::Json(new_course);
         let resp = post_new_course(course_param, app_state).await;

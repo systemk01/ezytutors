@@ -26,7 +26,7 @@ async fn main() -> io::Result<()> {
     let shared_data = web::Data::new(AppState {
         health_check_response: "I'm good, you already asked me".to_string(),
         visit_count: Mutex::new(0),
-        db: db_pool,
+        _db: db_pool,
     });
     //Construct App and configure routes
     let app = move || {
