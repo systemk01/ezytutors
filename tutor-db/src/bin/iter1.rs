@@ -29,7 +29,7 @@ async fn main() -> io::Result<()> {
             course_id: course_row.course_id,
             tutor_id: course_row.tutor_id,
             course_name: course_row.course_name,
-            posted_time: Some(chrono::NaiveDateTime::from(course_row.posted_time.unwrap())),
+            posted_time: Some(course_row.posted_time.unwrap()),
         })
     }
     println!("Courses = {:?}", courses_list);

@@ -85,7 +85,9 @@ mod tests {
             tutor_id: 1,
             course_id: 2,
             course_name: "this is the next course".into(),
-            posted_time: Some(NaiveDateTime::parse_from_str("2015-09-05 23:56:04", "%Y-%m-%d %H:%M:%S").unwrap()),
+            posted_time: Some(
+                NaiveDateTime::parse_from_str("2015-09-05 23:56:04", "%Y-%m-%d %H:%M:%S").unwrap(),
+            ),
         };
         let course_param = web::Json(new_course);
         let resp = post_new_course(course_param, app_state).await;

@@ -1,7 +1,6 @@
 use super::db_access::*;
-use super::state::AppState;
 use super::models::Course;
-use std::convert::TryFrom;
+use super::state::AppState;
 use actix_web::{web, HttpResponse};
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
@@ -12,28 +11,36 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
     HttpResponse::Ok().json(&response)
 }
 
-pub async fn get_courses_for_tutor(app_state: web::Data<AppState>, params: web::Path<i32>) -> HttpResponse {
+pub async fn get_courses_for_tutor(
+    app_state: web::Data<AppState>,
+    params: web::Path<i32>,
+) -> HttpResponse {
     let param = params.into_inner();
-    let tutor_id = i32::try_from(param).unwrap();
+    let tutor_id = param;
     let courses = get_courses_for_tutor_db(&app_state.db, tutor_id).await;
     HttpResponse::Ok().json(courses)
 }
 
-pub async fn get_course_details(app_state: web::Data<AppState>, params: web::Path<(i32,i32)>) -> HttpResponse {
+pub async fn get_course_details(
+    app_state: web::Data<AppState>,
+    params: web::Path<(i32, i32)>,
+) -> HttpResponse {
     let params = params.into_inner();
-    let tutor_id = i32::try_from(params.0).unwrap();
-    let course_id = i32::try_from(params.1).unwrap();
+    let tutor_id = params.0;
+    let course_id = params.1;
     let course = get_course_details_db(&app_state.db, tutor_id, course_id).await;
     HttpResponse::Ok().json(course)
     //HttpResponse::new(StatusCode::OK)
 }
 
-pub async fn post_new_course(new_course: web::Json<Course>, app_state: web::Data<AppState>) -> HttpResponse {
+pub async fn post_new_course(
+    new_course: web::Json<Course>,
+    app_state: web::Data<AppState>,
+) -> HttpResponse {
     let course = post_new_course_db(&app_state.db, new_course.into()).await;
     HttpResponse::Ok().json(course)
     //HttpResponse::new(StatusCode::OK)
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -89,7 +96,9 @@ mod tests {
             tutor_id: 1,
             course_id: 3,
             course_name: "this is the next course".into(),
-            posted_time: Some(NaiveDateTime::parse_from_str("2015-09-05 23:56:04", "%Y-%m-%d %H:%M:%S").unwrap()),
+            posted_time: Some(
+                NaiveDateTime::parse_from_str("2015-09-05 23:56:04", "%Y-%m-%d %H:%M:%S").unwrap(),
+            ),
         };
         let course_param = web::Json(new_course);
         let resp = post_new_course(course_param, app_state).await;

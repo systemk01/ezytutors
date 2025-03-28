@@ -5,6 +5,8 @@ use std::env;
 use std::io;
 use std::sync::Mutex;
 
+#[path = "../iter3/db_access.rs"]
+mod db_access;
 #[path = "../iter3/handlers.rs"]
 mod handlers;
 #[path = "../iter3/models.rs"]
@@ -13,8 +15,6 @@ mod models;
 mod routes;
 #[path = "../iter3/state.rs"]
 mod state;
-#[path = "../iter3/db_access.rs"]
-mod db_access;
 
 use routes::*;
 use state::AppState;
